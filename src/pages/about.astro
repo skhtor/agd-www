@@ -1,18 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import founderImg from '../images/about/founder.jpg';
+import azad1 from '../images/about/azad_1.jpg';
 ---
 
 <BaseLayout title="About" description="Learn about Azad Gharibian Dance - the first and only Armenian dance group in Victoria, formed in Melbourne in 1994.">
   <section class="about-hero section">
     <div class="container">
       <h1>About AGD</h1>
-      <p class="about-intro">Azad Gharibian Dance (AGD) is a not-for-profit organisation, which aims to promote and preserve the ancient art of Armenian dance and culture in Australia. It is the first and only Armenian dance group in Victoria, formed in Melbourne on March 2nd 1994.</p>
-    </div>
-  </section>
-
-  <section class="about-section section">
-    <div class="container">
       <div class="about-content">
+        <p>Azad Gharibian Dance (AGD) is a not-for-profit organisation, which aims to promote and preserve the ancient art of Armenian dance and culture in Australia. It is the first and only Armenian dance group in Victoria, formed in Melbourne on March 2nd 1994.</p>
         <p>There are currently over 80 students in AGD's Junior, Intermediate, Senior and Social groups, with ages ranging from four to 70+ years of age. AGD prides itself on its inclusive group culture and accessibility to all ages and abilities, creating a place for Armenians to honour their traditions and express creativity and passion.</p>
         <p>Since its formation, AGD has been performing all across Australia at a wide range of multicultural events, festivals, weddings and concerts, often collaborating with other Armenian and Multicultural dance groups, celebrating rich culture and diversity within Australia.</p>
       </div>
@@ -22,6 +20,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="history section">
     <div class="container">
       <h2>History — Azad Gharibian</h2>
+      <div class="azad-images">
+        <Image src={azad1} alt="Azad Gharibian" width={400} height={500} class="azad-photo" />
+      </div>
+      <div class="azad-video">
+        <video controls preload="metadata" playsinline>
+          <source src="/videos/krounk-edited.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
       <div class="about-content">
         <p>Azad Gharibian Dance (AGD) is named after and is a tribute to the late Azad Gharibian, a famous choreographer and dancer from Armenia.</p>
         <p>Azad Gharibian dedicated his life travelling around Armenia to learn the depths of his culture and heritage, where he collected and re-created folkloric dances from different regions of the country. He visited various villages, where he observed and learned their traditional dances and nuanced rituals.</p>
@@ -35,8 +42,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="founder section">
     <div class="container">
       <h2>Founder — Hermine Kuyumcian</h2>
+      <div class="founder-image">
+        <Image src={founderImg} alt="Hermine Kuyumcian, founder of Azad Gharibian Dance" width={500} height={600} class="founder-photo" />
+      </div>
       <blockquote class="founder-quote">
-        "I've had the honour of teaching Armenian dance in Australia for the last 30 years through Azad Gharibian Dance group — a living tribute to the enduring legacy of late choreographer Azad Gharibian. Words cannot express how proud I am of all my students — from past to present, juniors to seniors — for everything they've achieved throughout the years, and importantly, for keeping our rich culture and heritage alive in Australia. All your hard work and dedication continues to inspire me every day, and I couldn't be more grateful for you all."
+        "I've had the honour of teaching Armenian dance in Australia for the last 30 years through Azad Gharibian Dance — a living tribute to the enduring legacy of late choreographer Azad Gharibian. Words cannot express how proud I am of all my students — from past to present, juniors to seniors — for everything they've achieved throughout the years, and importantly, for keeping our rich culture and heritage alive in Australia. All your hard work and dedication continues to inspire me every day, and I couldn't be more grateful for you all."
       </blockquote>
       <div class="about-content">
         <p>Hermine Kuyumcian, who was born in Yerevan, Armenia, started her dancing career at the age of five. At only 12 years of age, she became an assistant dance teacher for "Yeridasartootyun" Dance Group, despite being the youngest in her group. Following this, Hermine began tutoring dance at multiple schools, cultural centres and universities.</p>
@@ -50,15 +60,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .about-hero {
     text-align: center;
-    padding-bottom: 0;
   }
 
-  .about-intro {
-    font-size: 1.15rem;
-    color: var(--color-gray-200);
-    max-width: 750px;
-    margin: var(--space-md) auto 0;
-    line-height: 1.7;
+  .about-hero h1 {
+    margin-bottom: var(--space-lg);
   }
 
   .about-content {
@@ -80,6 +85,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .history h2, .founder h2 {
     margin-bottom: var(--space-lg);
+  }
+
+  .founder-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .founder-photo {
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .azad-images {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  .azad-photo {
+    border-radius: 8px;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .azad-video {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .azad-video video {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
   }
 
   .founder-quote {

@@ -3,28 +3,58 @@ import { Image } from 'astro:assets';
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/images/gallery/*.{jpg,jpeg,png,webp}');
 const imageEntries = Object.entries(images);
+
+// Shuffle the photos
+for (let i = imageEntries.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [imageEntries[i], imageEntries[j]] = [imageEntries[j], imageEntries[i]];
+}
+
+const INITIAL_COUNT = 9;
+const hasImages = imageEntries.length > 0;
+const hasMore = imageEntries.length > INITIAL_COUNT;
+const moreCount = imageEntries.length - INITIAL_COUNT;
+
+const resolved = await Promise.all(
+  imageEntries.map(async ([path, loader], index) => {
+    const img = await loader();
+    const filename = path.split('/').pop()?.replace(/\.[^.]+$/, '') || 'Gallery photo';
+    const alt = `AGD - ${filename.replace(/[-_]/g, ' ')}`;
+    const hidden = index >= INITIAL_COUNT;
+    return { img: img.default, alt, hidden };
+  })
+);
 ---
 
-{imageEntries.length > 0 ? (
-  <div class="gallery-grid">
-    {await Promise.all(imageEntries.map(async ([path, loader]) => {
-      const img = await loader();
-      const filename = path.split('/').pop()?.replace(/\.[^.]+$/, '') || 'Gallery photo';
-      const alt = `AGD - ${filename.replace(/[-_]/g, ' ')}`;
-      return (
-        <a href={img.default.src} class="glightbox gallery-item" data-gallery="agd-gallery">
-          <Image
-            src={img.default}
-            alt={alt}
-            width={400}
-            height={300}
-            class="gallery-image"
-          />
-        </a>
-      );
-    }))}
+{hasImages && (
+  <div class="gallery-grid" id="gallery-grid">
+    {resolved.map((item) => (
+      <a
+        href={item.img.src}
+        class={item.hidden ? 'glightbox gallery-item gallery-hidden' : 'glightbox gallery-item'}
+        data-gallery="agd-gallery"
+      >
+        <Image
+          src={item.img}
+          alt={item.alt}
+          width={400}
+          height={300}
+          class="gallery-image"
+        />
+      </a>
+    ))}
   </div>
-) : (
+)}
+
+{hasMore && (
+  <div class="gallery-show-more">
+    <button id="show-more-btn" class="btn btn-secondary">
+      Show More ({moreCount} more)
+    </button>
+  </div>
+)}
+
+{!hasImages && (
   <div class="gallery-empty">
     <p>Photos coming soon! Check out our <a href="https://www.facebook.com/AGD.melb" target="_blank" rel="noopener noreferrer">Facebook</a> and <a href="https://www.instagram.com/agd_melb/" target="_blank" rel="noopener noreferrer">Instagram</a> for our latest photos.</p>
   </div>
@@ -43,6 +73,10 @@ const imageEntries = Object.entries(images);
     aspect-ratio: 4/3;
   }
 
+  .gallery-hidden {
+    display: none;
+  }
+
   .gallery-image {
     width: 100%;
     height: 100%;
@@ -52,6 +86,11 @@ const imageEntries = Object.entries(images);
 
   .gallery-item:hover .gallery-image {
     transform: scale(1.05);
+  }
+
+  .gallery-show-more {
+    text-align: center;
+    margin-top: var(--space-lg);
   }
 
   .gallery-empty {
@@ -73,3 +112,19 @@ const imageEntries = Object.entries(images);
     }
   }
 </style>
+
+<script>
+  function initGalleryShowMore() {
+    const btn = document.getElementById('show-more-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const hidden = document.querySelectorAll('.gallery-hidden');
+      hidden.forEach(item => item.classList.remove('gallery-hidden'));
+      btn.parentElement?.remove();
+    });
+  }
+
+  initGalleryShowMore();
+  document.addEventListener('astro:after-swap', initGalleryShowMore);
+</script>

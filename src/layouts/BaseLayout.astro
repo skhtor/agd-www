@@ -43,4 +43,10 @@ const { title, description = 'Azad Gharibian Dance - 32 years of culture, commun
   body:has(.hero) main {
     padding-top: 0;
   }
+
+  /* Prevent text size flickering during view transitions */
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.2s;
+  }
 </style>
