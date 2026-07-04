@@ -13,7 +13,7 @@ const links = [
   <div class="nav-inner container">
     <a href="/" class="nav-logo" aria-label="Azad Gharibian Dance - Home">
       <img src="/images/logos/agd_logo_krunk_only_dark_bg_transparent.png" alt="" width="48" height="48" class="nav-crane" />
-      <img src="/images/logos/agd_logo_text_only_dark_bg_transparent.png" alt="Azad Gharibian Dance" height="28" class="nav-text" />
+      <img src="/images/logos/agd_logo_text_only_dark_bg_transparent.png" alt="Azad Gharibian Dance" height="28" class="nav-text" fetchpriority="low" />
     </a>
 
     <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
@@ -85,6 +85,7 @@ const links = [
     height: 20px;
     width: auto;
     object-fit: contain;
+    view-transition-name: none;
   }
 
   .nav-links {
@@ -112,21 +113,21 @@ const links = [
   .nav-toggle {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: var(--space-xs);
-    min-width: 44px;
-    min-height: 44px;
+    padding: var(--space-sm);
+    min-width: 48px;
+    min-height: 48px;
     align-items: center;
     justify-content: center;
   }
 
   .nav-toggle-bar {
     display: block;
-    width: 24px;
-    height: 2px;
+    width: 28px;
+    height: 3px;
     background: var(--color-white);
     transition: transform 0.2s ease;
   }
@@ -136,6 +137,10 @@ const links = [
       display: flex;
     }
 
+    .nav-text {
+      display: none;
+    }
+
     .nav-links {
       display: none;
       position: absolute;
@@ -143,10 +148,11 @@ const links = [
       left: 0;
       right: 0;
       flex-direction: column;
+      align-items: flex-end;
       background: var(--color-black);
-      padding: var(--space-md);
+      padding: var(--space-lg) var(--space-xl);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      gap: 0;
+      gap: var(--space-sm);
     }
 
     .nav-links.open {
@@ -154,53 +160,63 @@ const links = [
     }
 
     .nav-link {
-      padding: var(--space-sm) 0;
+      padding: 0;
       border-bottom: none;
+      font-size: 1.2rem;
     }
   }
 </style>
 
-<script>
-  function initNav() {
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.querySelector('.nav-links') as HTMLElement;
-    const nav = document.querySelector('.nav');
+<script is:inline>
+  document.addEventListener('astro:page-load', function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var menu = document.querySelector('.nav-links');
+    var nav = document.querySelector('.nav');
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
 
     // Mobile menu toggle
-    toggle?.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      menu?.classList.toggle('open');
-    });
-
-    // Set initial state
-    const isHome = window.location.pathname === '/';
-    if (!isHome) {
-      nav?.classList.add('scrolled');
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        menu.classList.toggle('open');
+        if (isMobile) {
+          if (!expanded) {
+            nav.classList.add('scrolled');
+          } else {
+            nav.classList.remove('scrolled');
+          }
+        }
+      });
     }
 
-    // Auto-hide on scroll + solid background (only animates on home)
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.scrollY;
+    // Set initial state
+    var isHome = window.location.pathname === '/';
+    if (isMobile) {
+      nav && nav.classList.remove('scrolled');
+    } else if (!isHome) {
+      nav && nav.classList.add('scrolled');
+    }
 
-      if (isHome) {
-        if (currentScroll > 100) {
-          nav?.classList.add('scrolled');
-        } else {
-          nav?.classList.remove('scrolled');
+    // Desktop: scroll behavior
+    if (!isMobile) {
+      var lastScroll = 0;
+      window.addEventListener('scroll', function() {
+        var currentScroll = window.scrollY;
+        if (isHome) {
+          if (currentScroll > 100) {
+            nav.classList.add('scrolled');
+          } else {
+            nav.classList.remove('scrolled');
+          }
         }
-      }
-
-      if (currentScroll > lastScroll && currentScroll > 80) {
-        nav?.classList.add('hidden');
-      } else {
-        nav?.classList.remove('hidden');
-      }
-      lastScroll = currentScroll;
-    });
-  }
-
-  initNav();
-  document.addEventListener('astro:after-swap', initNav);
+        if (currentScroll > lastScroll && currentScroll > 80) {
+          nav.classList.add('hidden');
+        } else {
+          nav.classList.remove('hidden');
+        }
+        lastScroll = currentScroll;
+      });
+    }
+  });
 </script>
