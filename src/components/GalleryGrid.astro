@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/images/gallery/*.{jpg,jpeg,png,webp}');
+const imageEntries = Object.entries(images);
+---
+
+{imageEntries.length > 0 ? (
+  <div class="gallery-grid">
+    {await Promise.all(imageEntries.map(async ([path, loader]) => {
+      const img = await loader();
+      const filename = path.split('/').pop()?.replace(/\.[^.]+$/, '') || 'Gallery photo';
+      const alt = `AGD - ${filename.replace(/[-_]/g, ' ')}`;
+      return (
+        <a href={img.default.src} class="glightbox gallery-item" data-gallery="agd-gallery">
+          <Image
+            src={img.default}
+            alt={alt}
+            width={400}
+            height={300}
+            class="gallery-image"
+          />
+        </a>
+      );
+    }))}
+  </div>
+) : (
+  <div class="gallery-empty">
+    <p>Photos coming soon! Check out our <a href="https://www.facebook.com/AGD.melb" target="_blank" rel="noopener noreferrer">Facebook</a> and <a href="https://www.instagram.com/agd_melb/" target="_blank" rel="noopener noreferrer">Instagram</a> for our latest photos.</p>
+  </div>
+)}
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 4/3;
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+  }
+
+  .gallery-empty {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-md);
+    color: var(--color-gray-200);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+
+  .gallery-empty p {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-xs);
+    }
+  }
+</style>

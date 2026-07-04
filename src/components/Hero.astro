@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  heading: string;
+  subheading: string;
+  heroImage: ImageMetadata;
+  ctaPrimary?: { text: string; href: string };
+  ctaSecondary?: { text: string; href: string };
+}
+
+const { heading, subheading, heroImage, ctaPrimary, ctaSecondary } = Astro.props;
+---
+
+<section class="hero">
+  <Image
+    src={heroImage}
+    alt="AGD performers on stage"
+    class="hero-bg"
+    width={1920}
+    height={1080}
+    loading="eager"
+  />
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    <img src="/images/logos/agd_logo_dark_bg_transparent.png" alt="" class="hero-logo" width="200" height="200" transition:name="hero-logo" />
+    <h1 class="hero-heading">{heading}</h1>
+    <p class="hero-subheading">{subheading}</p>
+    {(ctaPrimary || ctaSecondary) && (
+      <div class="hero-ctas">
+        {ctaPrimary && <a href={ctaPrimary.href} class="btn btn-primary">{ctaPrimary.text}</a>}
+        {ctaSecondary && <a href={ctaSecondary.href} class="btn btn-secondary">{ctaSecondary.text}</a>}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.3) 0%,
+      rgba(10, 10, 10, 0.5) 60%,
+      rgba(10, 10, 10, 1) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    color: var(--color-white);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .hero-logo {
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+    margin: -2rem auto var(--space-2xl);
+  }
+
+  .hero-heading {
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .hero-subheading {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    opacity: 0.9;
+    max-width: 550px;
+    margin: 0 auto var(--space-lg);
+    line-height: 1.5;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero .btn-secondary {
+    color: var(--color-white);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .hero .btn-secondary:hover {
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+</style>

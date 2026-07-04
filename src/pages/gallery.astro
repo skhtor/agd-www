@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GalleryGrid from '../components/GalleryGrid.astro';
+---
+
+<BaseLayout title="Gallery" description="Photos from AGD performances, rehearsals, and community events.">
+  <section class="gallery-hero section">
+    <div class="container">
+      <h1>Gallery</h1>
+      <p class="gallery-intro">Moments from our performances, rehearsals, and the community bonds that make AGD special.</p>
+    </div>
+  </section>
+
+  <section class="gallery-section section">
+    <div class="container">
+      <GalleryGrid />
+
+      <div class="gallery-socials">
+        <p>See more photos and videos on our social media:</p>
+        <div class="gallery-socials-links">
+          <a href="https://www.facebook.com/AGD.melb" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Facebook</a>
+          <a href="https://www.instagram.com/agd_melb/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import GLightbox from 'glightbox';
+  import 'glightbox/dist/css/glightbox.min.css';
+
+  GLightbox({
+    selector: '.glightbox',
+    touchNavigation: true,
+    loop: true,
+    closeOnOutsideClick: true,
+  });
+</script>
+
+<style>
+  .gallery-hero {
+    text-align: center;
+    padding-bottom: 0;
+  }
+
+  .gallery-intro {
+    font-size: 1.1rem;
+    color: var(--color-gray-200);
+    max-width: 600px;
+    margin: var(--space-sm) auto 0;
+  }
+
+  .gallery-section {
+    padding-top: var(--space-lg);
+  }
+
+  .gallery-socials {
+    text-align: center;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .gallery-socials p {
+    color: var(--color-gray-200);
+    margin-bottom: var(--space-md);
+  }
+
+  .gallery-socials-links {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+  }
+</style>

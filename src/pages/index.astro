@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+
+// Import your hero image - replace the filename with your actual image
+const heroImages = import.meta.glob<{ default: ImageMetadata }>('/src/images/hero/*.{jpg,jpeg,png,webp}');
+const heroEntries = Object.values(heroImages);
+const heroImage = heroEntries.length > 0 ? (await heroEntries[0]()).default : null;
+---
+
+<BaseLayout title="Home" description="Armenian Dance Group - Reignite your passion for Armenian culture. Join the family. 32 years of dance, community, and pride.">
+  {heroImage ? (
+    <Hero
+      heading="Reignite your passion for Armenian culture"
+      subheading="Join the family. 32 years of dance, community, and pride."
+      heroImage={heroImage}
+      ctaPrimary={{ text: 'Get in Touch', href: '/contact' }}
+      ctaSecondary={{ text: 'Learn More', href: '/about' }}
+    />
+  ) : (
+    <section class="hero-placeholder">
+      <div class="container" style="text-align:center; padding: 8rem 1rem;">
+        <h1>Reignite your passion for Armenian culture</h1>
+        <p style="margin-top:1rem; color:#666;">Add your hero image to src/images/hero/ to see it here.</p>
+      </div>
+    </section>
+  )}
+
+  <section class="highlights section">
+    <div class="container">
+      <h2 class="highlights-heading">More than a dance group</h2>
+      <p class="highlights-intro">We are a family. For over three decades, AGD has been bringing Armenians together through the joy of traditional and modern dance.</p>
+
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-icon">🎭</div>
+          <h3>Performance</h3>
+          <p>From concert stages to community events, we bring Armenian dance to life with passion and energy.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">👨‍👩‍👧‍👦</div>
+          <h3>Community</h3>
+          <p>A tight-knit group where lifelong friendships are formed. All ages, all skill levels welcome.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon">🇦🇲</div>
+          <h3>Culture</h3>
+          <p>Preserving and celebrating Armenian heritage through dance, music, and togetherness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .highlights-heading {
+    text-align: center;
+    margin-bottom: var(--space-sm);
+  }
+
+  .highlights-intro {
+    text-align: center;
+    color: var(--color-gray-200);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+  }
+
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .highlight-card {
+    text-align: center;
+    padding: var(--space-lg);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .highlight-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .highlight-card h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .highlight-card p {
+    color: var(--color-gray-200);
+    font-size: 0.95rem;
+  }
+</style>
