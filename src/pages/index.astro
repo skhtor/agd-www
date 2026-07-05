@@ -33,17 +33,29 @@ const heroImage = heroEntries.length > 0 ? (await heroEntries[0]()).default : nu
 
       <div class="highlights-grid">
         <div class="highlight-card">
-          <div class="highlight-icon">🎭</div>
+          <div class="highlight-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15.295 19.562 16 22" /><path d="m17 16 3.758 2.098" /><path d="m19 12.5 3.026-.598" /><path d="M7.61 6.3a3 3 0 0 0-3.92 1.3l-1.38 2.79a3 3 0 0 0 1.3 3.91l6.89 3.597a1 1 0 0 0 1.342-.447l3.106-6.211a1 1 0 0 0-.447-1.341z" /><path d="M8 9V2" />
+            </svg>
+          </div>
           <h3>Performance</h3>
           <p>From concert stages to community events, we bring Armenian dance to life with passion and energy.</p>
         </div>
         <div class="highlight-card">
-          <div class="highlight-icon">👨‍👩‍👧‍👦</div>
+          <div class="highlight-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path d="M16 3.128a4 4 0 0 1 0 7.744" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" />
+            </svg>
+          </div>
           <h3>Community</h3>
           <p>A tight-knit group where lifelong friendships are formed. All ages, all skill levels welcome.</p>
         </div>
         <div class="highlight-card">
-          <div class="highlight-icon">🇦🇲</div>
+          <div class="highlight-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 18v-7" /><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" /><path d="M14 18v-7" /><path d="M18 18v-7" /><path d="M3 22h18" /><path d="M6 18v-7" />
+            </svg>
+          </div>
           <h3>Culture</h3>
           <p>Preserving and celebrating Armenian heritage through dance, music, and togetherness.</p>
         </div>
@@ -81,8 +93,8 @@ const heroImage = heroEntries.length > 0 ? (await heroEntries[0]()).default : nu
   }
 
   .highlight-icon {
-    font-size: 2.5rem;
     margin-bottom: var(--space-sm);
+    color: var(--color-orange);
   }
 
   .highlight-card h3 {
