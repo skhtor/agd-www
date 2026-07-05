@@ -24,7 +24,7 @@ import azad1 from '../images/about/azad_1.jpg';
         <Image src={azad1} alt="Azad Gharibian" width={400} height={500} class="azad-photo" />
       </div>
       <div class="azad-video">
-        <video controls preload="metadata" playsinline>
+        <video controls preload="metadata" playsinline id="azad-video">
           <source src="/videos/krounk-edited.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -56,6 +56,13 @@ import azad1 from '../images/about/azad_1.jpg';
     </div>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', function() {
+    var video = document.getElementById('azad-video');
+    if (video) video.load();
+  });
+</script>
 
 <style>
   .about-hero {
