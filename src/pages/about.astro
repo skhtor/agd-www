@@ -58,10 +58,8 @@ import azad1 from '../images/about/azad_1.jpg';
 </BaseLayout>
 
 <script is:inline>
-  document.addEventListener('astro:page-load', function() {
-    var video = document.getElementById('azad-video');
-    if (video) video.load();
-  });
+  var video = document.getElementById('azad-video');
+  if (video) video.load();
 </script>
 
 <style>

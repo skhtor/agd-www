@@ -39,12 +39,13 @@ const { heading, subheading, heroImage, ctaPrimary, ctaSecondary } = Astro.props
   .hero {
     position: relative;
     min-height: 85vh;
-    margin-top: 4rem;
+    padding-top: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
+    margin: 0;
   }
 
   .hero-bg {
@@ -53,20 +54,14 @@ const { heading, subheading, heroImage, ctaPrimary, ctaSecondary } = Astro.props
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 20%;
     z-index: 0;
   }
 
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(10, 10, 10, 1) 0%,
-      rgba(10, 10, 10, 0.5) 15%,
-      rgba(10, 10, 10, 0.3) 50%,
-      rgba(10, 10, 10, 0.5) 70%,
-      rgba(10, 10, 10, 1) 100%
-    );
+    background: linear-gradient(to bottom, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.3) 15%, rgba(10, 10, 10, 0.3) 50%, rgba(10, 10, 10, 0.5) 70%, rgba(10, 10, 10, 1) 100%);
     z-index: 1;
   }
 

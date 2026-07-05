@@ -168,7 +168,7 @@ const links = [
 </style>
 
 <script is:inline>
-  document.addEventListener('astro:page-load', function() {
+  function initNav() {
     var toggle = document.querySelector('.nav-toggle');
     var menu = document.querySelector('.nav-links');
     var nav = document.querySelector('.nav');
@@ -190,12 +190,16 @@ const links = [
       });
     }
 
-    // Set initial state
+    // Set initial state based on page
     var isHome = window.location.pathname === '/';
     if (isMobile) {
-      nav && nav.classList.remove('scrolled');
+      nav.classList.remove('scrolled');
+      menu.classList.remove('open');
+      toggle && toggle.setAttribute('aria-expanded', 'false');
     } else if (!isHome) {
-      nav && nav.classList.add('scrolled');
+      nav.classList.add('scrolled');
+    } else if (window.scrollY <= 100) {
+      nav.classList.remove('scrolled');
     }
 
     // Desktop: scroll behavior
@@ -218,5 +222,8 @@ const links = [
         lastScroll = currentScroll;
       });
     }
-  });
+  }
+
+  initNav();
+  document.addEventListener('astro:after-swap', initNav);
 </script>

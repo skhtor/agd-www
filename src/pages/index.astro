@@ -8,7 +8,7 @@ const heroEntries = Object.values(heroImages);
 const heroImage = heroEntries.length > 0 ? (await heroEntries[0]()).default : null;
 ---
 
-<BaseLayout title="Home" description="Armenian Dance Group - Reignite your passion for Armenian culture. Join the family. 32 years of dance, community, and pride.">
+<BaseLayout title="Home" description="Armenian Dance Group - Reignite your passion for Armenian culture. Join the family. 32 years of dance, community, and pride." isHome={true}>
   {heroImage ? (
     <Hero
       heading="Reignite your passion for Armenian culture"

@@ -7,9 +7,10 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  isHome?: boolean;
 }
 
-const { title, description = 'Azad Gharibian Dance - 32 years of culture, community, and dance.' } = Astro.props;
+const { title, description = 'Azad Gharibian Dance - 32 years of culture, community, and dance.', isHome = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,15 +23,15 @@ const { title, description = 'Azad Gharibian Dance - 32 years of culture, commun
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <ClientRouter />
     <style>
       @media (max-width: 768px) { .nav-text { display: none !important; } }
     </style>
+    <ClientRouter />
     <title>{title} | Azad Gharibian Dance</title>
   </head>
   <body>
     <Nav />
-    <main id="main-content">
+    <main id="main-content" class={isHome ? 'home' : ''}>
       <slot />
     </main>
     <Footer />
@@ -42,14 +43,7 @@ const { title, description = 'Azad Gharibian Dance - 32 years of culture, commun
     padding-top: var(--nav-height);
   }
 
-  /* Home page: hero goes behind the transparent nav */
-  body:has(.hero) main {
+  main.home {
     padding-top: 0;
-  }
-
-  /* Prevent text size flickering during view transitions */
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation-duration: 0.2s;
   }
 </style>
